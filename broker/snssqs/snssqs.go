@@ -229,6 +229,8 @@ func (b *awsServices) Connect() error {
 	}
 	b.accountID = *result.Account
 
+	logger.Debugf("Connected using accountID %s", b.accountID)
+
 	return nil
 }
 
@@ -305,6 +307,8 @@ func (b *awsServices) Subscribe(queueName string, h broker.Handler, opts ...brok
 	for _, o := range opts {
 		o(&options)
 	}
+
+	logger.Debugf("Subscribing to URL: %s", queueURL)
 
 	subscriber := &subscriber{
 		options:   options,
