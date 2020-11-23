@@ -135,8 +135,12 @@ func (s *subscriber) handleMessage(msg *sqs.Message, hdlr broker.Handler) {
 		Body:   []byte(*msg.Body),
 	}
 
-	logger.Debugf("msg body: %s", *msg.Body)
-	logger.Debugf("msg attrs: %+v", msg.MessageAttributes)
+	// logger.Debugf("msg body: %s", *msg.Body)
+	// logger.Debugf("msg attrs: %+v", msg.MessageAttributes)
+
+	if ct, ok := m.Header["Content-Type"]; !ok || len(ct) == 0 {
+		m.Header["Content-Type"] = "application/grpc+json"
+	}
 
 	p := &sqsEvent{
 		sMessage:  msg,
