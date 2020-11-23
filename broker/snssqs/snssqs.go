@@ -135,6 +135,9 @@ func (s *subscriber) handleMessage(msg *sqs.Message, hdlr broker.Handler) {
 		Body:   []byte(*msg.Body),
 	}
 
+	logger.Debugf("msg body: %s", *msg.Body)
+	logger.Debugf("msg attrs: %+v", msg.MessageAttributes)
+
 	p := &sqsEvent{
 		sMessage:  msg,
 		m:         m,
